@@ -210,6 +210,7 @@ declare interface TotalBalanceBoxProps {
 
 declare interface FooterProps {
   user: User;
+  type?: string;
 }
 
 declare interface RightSidebarProps {
