@@ -1,8 +1,9 @@
 import HeaderBox from "@/components/HeaderBox";
 import RightSidebar from "@/components/RightSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
-export default function Home() {
+const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const accounts = [
     {
       id: "1",
@@ -45,21 +46,7 @@ export default function Home() {
     },
   ];
 
-  const loggedIn = {
-    $id: "user_123",
-    email: "max.boucher@example.com",
-    userId: "user_123",
-    dwollaCustomerUrl: "https://api-sandbox.dwolla.com/customers/123",
-    dwollaCustomerId: "123",
-    firstName: "Max",
-    lastName: "Boucher",
-    address1: "123 Main St",
-    city: "Montreal",
-    state: "QC",
-    postalCode: "H2Y 1C6",
-    dateOfBirth: "1990-01-01",
-    ssn: "123-45-6789",
-  };
+  const loggedIn = await getLoggedInUser();
 
   const transactions = [
     {
@@ -173,7 +160,7 @@ export default function Home() {
           <HeaderBox
             type="greeting"
             title="Welcome"
-            user={loggedIn?.firstName || "Guest"}
+            user={loggedIn?.name || "Guest"}
             subtext="Access and manage your account and transactions efficiently."
           />
           <TotalBalanceBox
@@ -189,4 +176,6 @@ export default function Home() {
       <RightSidebar user={loggedIn} transactions={transactions} banks={banks} />
     </section>
   );
-}
+};
+
+export default Home;
